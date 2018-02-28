@@ -28,21 +28,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <QtQml>
 
 #include "fileio.h"
+#include "cpumodel.h"
 
 int main(int argc, char *argv[])
 {
     //qmlRegisterType<FileIO, 1>("FileIO", 1, 0, "FileIO");
 
     QGuiApplication app(argc, argv);
-    FileIO* file_io = new FileIO();
-    file_io->setSource( "/proc/cpuinfo" );
-    QStringList dataList = file_io->read();
+    //FileIO* file_io = new FileIO();
+    //file_io->setSource( "/proc/cpuinfo" );
+    //QStringList dataList = file_io->read();
+
+
+
+        CpuModel cpuModel;
+
 
     QQuickView view;
+    view.setResizeMode(QQuickView::SizeRootObjectToView);
     QQmlContext* ctxt = view.rootContext();
-    ctxt->setContextProperty("myModel", QVariant::fromValue(dataList));
-    ctxt->setContextProperty( "myHeight", QVariant::fromValue( dataList.count() ) );
+    //ctxt->setContextProperty("myModel", QVariant::fromValue(dataList));
+
+        ctxt->setContextProperty("myModel", &cpuModel);
+        //ctxt->setContextProperty("myModel",  QVariant::fromValue( cpuModel ) );
+        ctxt->setContextProperty( "myHeight", QVariant::fromValue( cpuModel.rowCount() ) );
+    //ctxt->setContextProperty( "myHeight", QVariant::fromValue( dataList.count() ) );
     //ctxt->setContextProperty( "listHeight", QVariant::fromValue( dataList.count()*1000 ) );
+
     view.setSource( QUrl::fromLocalFile("main.qml") );
     view.setMinimumSize( QSize( 1000, 1000 ) );
     view.show();

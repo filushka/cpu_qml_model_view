@@ -1,10 +1,13 @@
 TEMPLATE = app
 
 QT += qml quick
+QT += widgets
+
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    fileio.cpp
+    fileio.cpp \
+    cpumodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -13,4 +16,8 @@ QML_IMPORT_PATH =
 
 
 HEADERS += \
-    fileio.h
+    fileio.h \
+    cpumodel.h
+
+DISTFILES += \
+    romb.png

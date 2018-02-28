@@ -24,37 +24,131 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import QtQuick 2.4
 import QtQuick.Window 2.2
+import QtQuick.Layouts 1.3
+import QtQuick.Controls 1.4
 
-ListView
-{
-    id: list
-    width: 1000
-    anchors.fill: parent
-    height: 1000
 
-    model: myModel
-    delegate: Rectangle {
-        width: parent.width
-        height:
-        {
-            if( myHeight )
-                parent.height / myHeight
-            else
-                50
-        }
-        color: "lightsteelblue"
-        border.color: "white"
-        border.width: 1
-        radius: 3
+ColumnLayout{
+    spacing: 2
 
-        Text
-        {
-            text: modelData
-            anchors.verticalCenter: parent.verticalCenter
-            width: list.width
-            verticalAlignment: Text.AlignBottom
-            horizontalAlignment: Text.AlignLeft
-            wrapMode: Text.WordWrap
+    Label {
+        text: "CPU INFO"
+        font.pixelSize: 30
+        font.italic: true
+        color: "steelblue"
+        horizontalAlignment: Text.AlignHCenter
+        width: 1000
+        Layout.fillWidth: true
+    }
+
+    ListView
+    {
+        id: list
+        width: 1000
+        height: 1000
+
+        model: myModel
+
+        delegate: Rectangle {
+            width: parent.width
+            height:
+            {
+                if( myHeight )
+                    parent.height / myHeight
+                else
+                    50
+            }
+            color: "lightsteelblue"
+            border.color: "white"
+            border.width: 1
+            radius: 3
+
+            GridLayout {
+                id: layout
+                columns: 3
+                rows: 1
+                anchors.fill: parent
+                anchors.margins: 5
+
+                Rectangle
+                {
+                    id: rectImage
+                    //x:10
+                    Layout.row: 1
+                    Layout.column: 1
+                    Layout.preferredWidth: 20
+                    Layout.preferredHeight: 20
+                    Layout.minimumWidth: 20
+                    Layout.fillWidth: false
+                    Layout.fillHeight: false
+                    color: "transparent"
+                    /*
+                    Layout.fillWidth: true
+                    Layout.minimumWidth: 20
+                    Layout.preferredWidth: 20
+                    Layout.maximumWidth: 20
+                    Layout.minimumHeight: 20
+                    color: "transparent"
+                    */
+
+                    Image {
+                       id: image
+                       anchors.fill: parent
+                       anchors.horizontalCenter: parent.horizontalCenter
+                       source: "romb.png"
+                       sourceSize.width: 20
+                       sourceSize.height: 20
+                    }
+                }
+
+                Rectangle
+                {
+                    Layout.row: 1
+                    Layout.column: 2
+                    Layout.minimumWidth: list.width / 2 -20 - 50
+                    Layout.preferredWidth: list.width / 2 -20 - 50
+                    /*
+                    Layout.fillWidth: true
+                    Layout.minimumWidth: list.width / 2 -20 - 50
+                    Layout.preferredWidth: list.width / 2 -20 - 50
+                    Layout.maximumWidth: list.width / 2 -20 - 50
+                    Layout.minimumHeight: list.width / 2 -20 - 50
+                    */
+
+                    Text
+                    {
+                        text: type;
+                        anchors.fill:parent
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        wrapMode: Text.WordWrap
+                        font.pixelSize: 17
+                    }
+                }
+
+                Rectangle
+                {
+                    Layout.row: 1
+                    Layout.column: 3
+                    Layout.minimumWidth: list.width / 2 -20 - 50
+                    Layout.preferredWidth: list.width / 2 -20 - 50
+                    /*
+                    Layout.fillWidth: true
+                    Layout.minimumWidth: list.width / 2 -20 - 50
+                    Layout.preferredWidth: list.width / 2 -20 - 50
+                    Layout.maximumWidth: list.width / 2 -20 - 50
+                    Layout.minimumHeight: list.width / 2 -20 - 50
+                    */
+
+                    Text
+                        {
+                            text: value;
+                            anchors.fill: parent
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            wrapMode: Text.WordWrap
+                            font.pixelSize: 14
+                        }
+                    }
+            }
         }
     }
 }
